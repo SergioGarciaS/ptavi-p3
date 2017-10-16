@@ -8,8 +8,10 @@ from xml.sax import make_parser
 from smallsmilhandler import SmallSMILHandler
 import urllib
 
+
 class karaokelocal(SmallSMILHandler):
     def __init__(self):
+        """ Método para capturar de terminal y realizar parseo """
         try:
             fich = sys.argv[1]
         except IndexError:
@@ -21,13 +23,14 @@ class karaokelocal(SmallSMILHandler):
         self.mytags = KHandler.get_tags()
 
     def __str__(self):
+        """ Método para crear la lista de etiquetas """
         self.final = ""
         for dic in self.mytags:
             frase = "\t"
             for element in dic:
                 for atributo in dic[element]:
                     print(dic[element][atributo])
-                    frase  += atributo + " = '"+ dic[element][atributo] + "'\t"
+                    frase += atributo + " = '" + dic[element][atributo] + "'\t"
                 self.final += element + frase + "\n"
         return self.final
 
@@ -43,9 +46,8 @@ class karaokelocal(SmallSMILHandler):
         for dic in self.mytags:
             for element in dic:
                 for atributo in dic[element]:
-
                     if atributo == 'src':
-                        atr = dic[element][atributo] #Lo utilizo para acortar.
+                        atr = dic[element][atributo]  # Lo utilizo para acortar
                         if atr.startswith('http://'):
                             urllib.request.urlretrieve(atr, atr.split('/')[-1])
                             dic[element][atributo] = "./" + atr.split('/')[-1]
@@ -53,15 +55,10 @@ class karaokelocal(SmallSMILHandler):
 
 if __name__ == "__main__":
 
-
-    karaok = karaokelocal()
-    print(karaok)
-    karaok.do_json(sys.argv[1])
-    karaok.do_json()
-    karaok.do_local()
-    print(karaok)
-    karaok.do_json()
-
-
-
-
+    K_Local = karaokelocal()
+    print(K_Local)
+    K_Local.do_json(sys.argv[1])
+    K_Local.do_json()
+    K_Local.do_local()
+    print(K_Local)
+    K_Local.do_json()
