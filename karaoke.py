@@ -18,23 +18,33 @@ class karaokelocal(SmallSMILHandler):
         parser.setContentHandler(KHandler)
         parser.parse(open(fich))
         self.mytags = KHandler.get_tags()
-
-    def format(self):
-        jambor = ""
+        self.final = ""
+    def __str__(self):
+        #self.final = ""
         for dic in self.mytags:
-            #print(dic)
             frase = "\t"
-
             for element in dic:
-                #print(element)
                 for atributo in dic[element]:
-                    #print(atributo, dic[element][atributo])
                     frase  += atributo + " = "+ dic[element][atributo] + "\t"
-                jambor += element + frase + "\n"
-        return jambor
+                self.final += element + frase + "\n"
+        return self.final
+
+    def do_json(self, name="local"):
+        if name == "local":
+            name = sys.argv[1].split(".")[0]
+
+        self.name = name + ".json"
+        with open(self.name, "w") as outfile:
+            json.dump(self.mytags, outfile, sort_keys=True, indent=4)
+
 
 if __name__ == "__main__":
 
 
     karaok = karaokelocal()
-    print(karaok.format())
+    #print(karaok.__str__())
+    karaok.do_json()
+
+
+
+
