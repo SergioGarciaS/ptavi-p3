@@ -58,7 +58,6 @@ if __name__ == "__main__":
     K_Local = karaokelocal()
     print(K_Local)
     K_Local.do_json(sys.argv[1])
-    K_Local.do_json()
     K_Local.do_local()
     print(K_Local)
     K_Local.do_json()
