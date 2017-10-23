@@ -29,7 +29,6 @@ class karaokelocal(SmallSMILHandler):
             frase = "\t"
             for element in dic:
                 for atributo in dic[element]:
-                    print(dic[element][atributo])
                     frase += atributo + " = '" + dic[element][atributo] + "'\t"
                 self.final += element + frase + "\n"
         return self.final
